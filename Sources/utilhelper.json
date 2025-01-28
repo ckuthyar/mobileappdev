@@ -3,18 +3,24 @@
         "filename":"main",
         "classname":"mainhomepage",
         "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world)","color(rp=bg_color,c=blue)"],
-        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=wellcome)"]
+        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=welcome)"]
     },
     {
         "filename":"screen1",
         "classname":"quiz1",
-        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world)","color(rp=bg_color,c=red)"],
-        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=hello world)"]
+        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world1)","color(rp=bg_color,c=blue)"],
+        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=welcome1)"]
     },
     {
         "filename":"screen2",
         "classname":"quiz2",
-        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world)","color(rp=bg_color,c=red)"],
-        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=hello world)"]
+        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world2)","color(rp=bg_color,c=blue)"],
+        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=welcome2)"]
+    },
+    {
+        "filename":"screen3",
+        "classname":"quiz1",
+        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world3)","color(rp=bg_color,c=blue)"],
+        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=welcome3)"]
     }
 ]

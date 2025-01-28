@@ -31,6 +31,8 @@ py flutterCreateApp.py app1
     }
 ]
 ```
+*Screen1* - stateless widget class   
+*Quiz1* - stateful widget class
 AppBar title is *"hello world"*   
 AppBar bgcolor is **blue**   
 In Main, 
