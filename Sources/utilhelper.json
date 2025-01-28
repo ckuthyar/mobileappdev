@@ -1,0 +1,20 @@
+[
+    {
+        "filename":"main",
+        "classname":"mainhomepage",
+        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world)","color(rp=bg_color,c=blue)"],
+        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=wellcome)"]
+    },
+    {
+        "filename":"screen1",
+        "classname":"quiz1",
+        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world)","color(rp=bg_color,c=red)"],
+        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=hello world)"]
+    },
+    {
+        "filename":"screen2",
+        "classname":"quiz2",
+        "appbar":["appbar(rp=appbar)","text(rp=title,text=hello world)","color(rp=bg_color,c=red)"],
+        "body":["row(rp=body)","container(rp=row)","text(rp=container,text=hello world)"]
+    }
+]
