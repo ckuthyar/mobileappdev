@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sangamone1/screen3c.dart';
 import 'package:sangamone1/screen4a.dart';
 
 class Screen3b extends StatelessWidget {
@@ -49,7 +50,7 @@ class _ClockincitiesbState extends State<Clockincitiesb> {
         }
       ),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> EMICalculator()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> CitiesClock()));
       },
         child: Icon(Icons.arrow_forward_sharp),),
     );
