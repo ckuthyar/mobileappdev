@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sangamone1/screen3.dart';
+import 'package:sangamone1/screen3a.dart';
 
 class Screen2 extends StatelessWidget {
   const Screen2({super.key});
