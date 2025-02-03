@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sangamone1/screen3.dart';
 
 class Screen2 extends StatelessWidget {
   const Screen2({super.key});
@@ -22,6 +23,7 @@ class _TimingsState extends State<Timings> {
 
   Stream stream = Stream.periodic(Duration(seconds: 1));
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +45,10 @@ class _TimingsState extends State<Timings> {
           );
         }),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Clockincities()));
+      },
+        child: Icon(Icons.arrow_forward_sharp),),
     );
   }
 }
