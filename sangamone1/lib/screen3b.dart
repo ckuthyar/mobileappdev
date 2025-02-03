@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sangamone1/screen4a.dart';
 
 class Screen3b extends StatelessWidget {
   const Screen3b({super.key});
@@ -6,7 +7,7 @@ class Screen3b extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Cites(),
+      home: Clockincitiesb(),
     );
   }
 }
@@ -18,16 +19,13 @@ class Clockincitiesb extends StatefulWidget {
   State<Clockincitiesb> createState() => _ClockincitiesbState();
 }
 
-class _ClockincitiesbState extends State<Cites> {
+class _ClockincitiesbState extends State<Clockincitiesb> {
 
   List<String> list1 = ["Los Angeles","New York","London","Dubai","Bamgalore","Singapore","Tokyo","Sydney"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Cites"),
-      ),
       body: StreamBuilder(
         stream: Stream.periodic(Duration(seconds: 1)),
         builder: (context, snapshot) {
@@ -50,6 +48,10 @@ class _ClockincitiesbState extends State<Cites> {
           });
         }
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> EMICalculator()));
+      },
+        child: Icon(Icons.arrow_forward_sharp),),
     );
   }
 }
