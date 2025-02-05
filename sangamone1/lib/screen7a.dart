@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sangamone1/screen8a.dart';
 
 class Screen7a extends StatelessWidget {
   const Screen7a({super.key});
@@ -32,6 +33,10 @@ class _ChessBoardState extends State<ChessBoard> {
           ),
         );
       }),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> CapitalQuiz()));
+      },
+        child: Icon(Icons.arrow_forward_sharp),),
     );
   }
 }
