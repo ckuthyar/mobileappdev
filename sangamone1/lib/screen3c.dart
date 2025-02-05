@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sangamone1/screen4a.dart';
 
 class Screen3c extends StatelessWidget {
   const Screen3c({super.key});
@@ -27,7 +28,7 @@ class _CitiesClockState extends State<CitiesClock> {
         stream: Stream.periodic(Duration(seconds: 1)),
         builder: (context, snapshot) {
           DateTime dt = DateTime.now().toUtc();
-          return Column(
+          return ListView(
             children: [
               Container(
                 child:Text("Los Angeles",style: TextStyle(fontSize: 30),),
@@ -61,11 +62,14 @@ class _CitiesClockState extends State<CitiesClock> {
                 child: Text("Sydney",style: TextStyle(fontSize: 30),),
               ),
               Text("${dt.add(Duration(hours: 11))}",style: TextStyle(fontSize: 30),),
-
             ],
           );
         }
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> EMICalculator()));
+      },
+        child: Icon(Icons.arrow_forward_sharp),),
     );
   }
 }
