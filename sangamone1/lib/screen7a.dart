@@ -34,7 +34,7 @@ class _ChessBoardState extends State<ChessBoard> {
         );
       }),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> CapitalQuiz()));
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=> CapitalQuiz()));
       },
         child: Icon(Icons.arrow_forward_sharp),),
     );
