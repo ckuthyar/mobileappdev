@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sangamone1/screen5.dart';
 import 'package:sangamone1/screen7a.dart';
 import 'package:sangamone1/screen8a.dart';
+import 'package:sangamone1/screen8d.dart';
 
 class App1 extends StatelessWidget {
   const App1({super.key});
@@ -27,7 +28,7 @@ class _TempState extends State<Temp> {
     return Scaffold(
       body: Text("Hello World"),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> Colorbyvalues()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> App8d()));
       },
         child: Icon(Icons.arrow_forward_sharp),),
     );
