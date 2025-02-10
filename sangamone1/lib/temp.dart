@@ -28,7 +28,7 @@ class _TempState extends State<Temp> {
     return Scaffold(
       body: Text("Hello World"),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> App8d()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Colorbyvalues()));
       },
         child: Icon(Icons.arrow_forward_sharp),),
     );

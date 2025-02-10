@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sangamone1/screen8d.dart';
 import 'package:sangamone1/util.dart';
 
 
@@ -118,6 +119,12 @@ class _QuizresultState extends State<Quizresult> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> App8d()));
+      },
+        label: Text("Result "),
+        icon: Icon(Icons.table_chart),
+          ),
     );
   }
 }
