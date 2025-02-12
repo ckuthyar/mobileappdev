@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sangamone1/screen8e.dart';
+import 'package:sangamone1/screen9.dart';
 
 class Screen8d extends StatelessWidget {
   const Screen8d({super.key});
@@ -78,13 +79,13 @@ class _App8dState extends State<App8d> {
                       print(map1);
                     });
                   }, child: Text("Next",style: TextStyle(fontSize: 30))):
-                      ElevatedButton(onPressed: (){
-                        setState(() {
-                          Qv="Quiz Over";
-                        });
-                      }, child: Text("Submit",style: TextStyle(fontSize: 30,color: Colors.white)),
-                      style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.blue)),
-                      ),
+                    ElevatedButton(onPressed: (){
+                      setState(() {
+                        Qv="Quiz Over";
+                      });
+                    }, child: Text("Submit",style: TextStyle(fontSize: 30,color: Colors.white)),
+                    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+                    ),
                 ],
               ),
               Text("$Qv"),
@@ -95,6 +96,7 @@ class _App8dState extends State<App8d> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>App9()))),
     );
   }
 }
