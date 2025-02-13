@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:sangamone1/screen10.dart';
 
 class Screen9 extends StatelessWidget {
   const Screen9({super.key});
@@ -68,6 +69,8 @@ class _App9State extends State<App9> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: ()=>
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>App10()))),
     );
   }
 }
