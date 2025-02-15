@@ -1,9 +1,7 @@
-
-import 'package:camera2/camera.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:camera2/camera.dart';
 
-late List<CameraDescription> cameralist;
 
 class Screen10 extends StatelessWidget {
   const Screen10({super.key});
@@ -16,7 +14,6 @@ class Screen10 extends StatelessWidget {
   }
 }
 
-
 class App10 extends StatefulWidget {
   const App10({super.key});
 
@@ -26,52 +23,69 @@ class App10 extends StatefulWidget {
 
 class _App10State extends State<App10> {
 
-  late CameraController controller;
+  late CameraController controller1;
+  XFile ?filepath;
 
-  getdetails()async{
-    cameralist = await availableCameras();
+  flash(){
     setState(() {
-      controller = CameraController(cameralist.first, ResolutionPreset.medium);
-      controller.initialize();
+      controller1.setFlashMode(FlashMode.torch);
     });
   }
 
   @override
   void initState(){
-    Future.sync(getdetails);
+    camerainit();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
+  void dispose(){
+    controller1.dispose();
     super.dispose();
   }
 
-  var flast = "off";
+  camerainit()async{
+    List<CameraDescription> cameraDescription = await availableCameras();
+    controller1 = CameraController(cameraDescription.first, ResolutionPreset.medium);
+    await controller1.initialize();
+    setState(() { });
+  }
+
+  videorecord(){
+    setState(() {
+      controller1.startVideoRecording();
+      controller1.setFlashMode(FlashMode.torch);
+    });
+  }
+
+  cancelvideo(){
+    setState(() {
+      controller1.stopVideoRecording();
+      controller1.setFlashMode(FlashMode.off);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CameraPreview(controller,
+    return CameraPreview(controller1,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        ElevatedButton(onPressed: (){
-          setState(() {
-            setState(() {
-              if(flast=="off"){
-                flast="on";
-                controller.setFlashMode(FlashMode.torch);
-              }
-              else if(flast=="on"){
-                flast="off";
-                controller.setFlashMode(FlashMode.off);
-              }
-            });
-
+        IconButton(onPressed: (){
+          setState(() async{
+            filepath = await controller1.takePicture();
           });
-        }, child:Icon(Icons.light_mode) )
+        }, icon: Icon(Icons.camera),iconSize: 100,color: Colors.white,),
+        IconButton(onPressed: (){
+          setState(() {
+            videorecord();
+          });
+        }, icon: Icon(Icons.video_call),iconSize: 100,color: Colors.white,),
+        IconButton(onPressed: (){
+          setState(() {
+            cancelvideo();
+          });
+        }, icon: Icon(Icons.videocam_off),iconSize: 100,color: Colors.white,),
       ],
     ),);
   }
