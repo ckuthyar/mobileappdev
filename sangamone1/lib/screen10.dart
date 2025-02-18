@@ -87,6 +87,7 @@ class _App10State extends State<App10> {
           });
         }, icon: Icon(Icons.videocam_off),iconSize: 100,color: Colors.white,),
       ],
-    ),);
+    ),
+    );
   }
 }
