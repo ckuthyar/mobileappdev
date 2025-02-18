@@ -20,4 +20,23 @@ class Quiz{
       "marks":marks
     };
   }
+<<<<<<< Updated upstream
+=======
+}
+
+
+
+class Apis{
+
+  static getWeather(int zip)async{
+    var uri = Uri.parse("");
+    var response = await http.get(uri,
+    headers: {"Content-type":"Application/json"});
+    if (response.statusCode==200){
+      print(jsonDecode(response.body));
+      return jsonDecode(response.body);
+    }
+  }
+
+>>>>>>> Stashed changes
 }
