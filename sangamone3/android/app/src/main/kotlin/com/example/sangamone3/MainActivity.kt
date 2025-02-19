@@ -24,8 +24,8 @@ class MainActivity: FlutterActivity(){
         MethodChannel(flutterEngine.dartExecutor,channel).setMethodCallHandler { call, result ->
             when(call.method){
                 "sms" -> {
-                    val phoneNumber:String="9844101520"
-                    val text:String="Good Morning"
+                    val phoneNumber:String=""
+                    val text:String=""
                     sendSms(phoneNumber,text)
                     result.success("Message Sent")
                 }
