@@ -21,35 +21,13 @@ class App1 extends StatefulWidget {
 
 class _App1State extends State<App1> {
 
-  List<Map<dynamic,dynamic>> list1 = [
-    {
-      "name":"Chandrashekar Rao Kuthyar",
-      "mobile":9481851276
-    },
-    {
-      "name":"Abhishek Kini",
-      "mobile":9844101520
-    },
-    {
-      "name":"Seetharam",
-      "mobile":9008321705
-    },
-    {
-      "name":"Kishan",
-      "mobile":9894153983
-    },
-    {
-      "name":"Sivashankar",
-      "mobile":8762467173
-    },
 
-  ];
 
   final channel = MethodChannel("com.example.sangamone3/sms");
   var print1="";
 
   getprint() async{
-    var data = await channel.invokeMethod("print");
+    var data = await channel.invokeMethod("sms");
     setState(() {
       print1=data;
     });
