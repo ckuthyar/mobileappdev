@@ -23,7 +23,7 @@ class _App11State extends State<App11> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(future: Apis.getWeather(577228), builder: (context,snapshot){
+      body: FutureBuilder(future: Apis.getWeather(577228), builder: (context,AsyncSnapshot<dynamic> snapshot){
         if (snapshot.connectionState==ConnectionState.waiting){
           return Center(
             child: CircularProgressIndicator(),
@@ -35,9 +35,30 @@ class _App11State extends State<App11> {
           );
         }
         else if(snapshot.hasData){
-          var data = snapshot.data;
-          return ListTile(
-            title: Text("${data}"),
+          Map? data = snapshot.data;
+          return Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width/1.5,
+              height: MediaQuery.of(context).size.height/1.5,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [Colors.red,Colors.green],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                tileMode: TileMode.clamp),
+              ),
+              alignment: Alignment.center,
+              child: DefaultTextStyle(style: TextStyle(color: Colors.white,fontSize: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Temperature: ${data?["main"]["temp"]}"),
+                  Text("Pressure: ${data?["main"]["pressure"]}"),
+                  Text("Humidity: ${data?["main"]["humidity"]}"),
+                  Text("Sea Level: ${data?["main"]["sea_level"]}"),
+                  Text("Visibility: ${data?["visibility"]}"),
+                ],
+              )),
+            ),
           );
         }
         else{
