@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sangamone3/screen2.dart';
 
 class Screen1 extends StatelessWidget {
   const Screen1({super.key});
@@ -70,6 +71,7 @@ class _App1State extends State<App1> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>App2()))),
     );
   }
 }
