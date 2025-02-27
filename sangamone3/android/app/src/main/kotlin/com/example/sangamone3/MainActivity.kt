@@ -5,7 +5,11 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
+import android.content.Context
 import android.database.Cursor
+import android.location.Location
+import android.location.LocationManager
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
@@ -25,7 +29,10 @@ class MainActivity: FlutterActivity(){
     private val SEND_SMS_PERMISSION = 100
     private val READ_SMS_PERMISSION = 101
     private val BLUTTOOTH_PERMISSION = 102
+    private val WIFI_PERMISSION = 103
+    private val LOCTION_PERMISSION = 104
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
@@ -45,6 +52,14 @@ class MainActivity: FlutterActivity(){
                 "scanBlue"->{
                     val devicedatsa = scanBluetooth()
                     result.success(devicedatsa)
+                }
+                "scanWifi"->{
+                    val wifiresult = scanWifi()
+                    result.success(wifiresult)
+                }
+                "location"->{
+                    val location = getLocation()
+                    result.success(location)
                 }
             }
         }
@@ -71,6 +86,8 @@ class MainActivity: FlutterActivity(){
             requestSmsRead()
         }
         requestBluetooth()
+        requestWifi()
+        requestLocation()
     }
 
 
@@ -94,6 +111,11 @@ class MainActivity: FlutterActivity(){
             }
             BLUTTOOTH_PERMISSION->{
                 if (grantResults.isEmpty()){
+                    Toast.makeText(context,"Permission not Granted",Toast.LENGTH_SHORT).show()
+                }
+            }
+            WIFI_PERMISSION->{
+                if(grantResults.isEmpty()){
                     Toast.makeText(context,"Permission not Granted",Toast.LENGTH_SHORT).show()
                 }
             }
@@ -137,6 +159,22 @@ class MainActivity: FlutterActivity(){
         }
     }
 
+    private fun requestWifi(){
+        if(ContextCompat.checkSelfPermission(context,Manifest.permission.NEARBY_WIFI_DEVICES)!=PermissionChecker.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.NEARBY_WIFI_DEVICES,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_WIFI_STATE),WIFI_PERMISSION)
+        }
+        else{
+            Toast.makeText(context,"Wifi permission granted",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun requestLocation(){
+        if(ContextCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION)!=PermissionChecker.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),LOCTION_PERMISSION)
+        }
+    }
+
+
 
     @SuppressLint("MissingPermission")
     private fun scanBluetooth(): MutableList<Any>{
@@ -156,6 +194,34 @@ class MainActivity: FlutterActivity(){
             Toast.makeText(context,"Device not be supported",Toast.LENGTH_SHORT).show()
             return emptyList<Any>().toMutableList()
         }
+    }
+
+    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun scanWifi(): Any? {
+        val wifiManager = getSystemService(WifiManager::class.java)
+        if(wifiManager.isWifiEnabled){
+            val result = wifiManager.scanResults
+            val wifiresult = result.map { it.BSSID }
+            return wifiresult
+        }
+        else{
+         return emptyList<Any>().toMutableList()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getLocation():Map<Any,Any>{
+        val locationManager = getSystemService(LocationManager::class.java)
+        val locations: Location? = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        val map1 = mutableMapOf<Any,Any>()
+        if (locations != null) {
+            map1.put("latitude",locations.latitude)
+            map1.put("longitude",locations.longitude)
+            map1.put("altitude",locations.altitude)
+        }
+        return map1
     }
 
 }

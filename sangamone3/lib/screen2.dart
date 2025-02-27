@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sangamone3/screen3.dart';
+import 'package:sangamone3/screen4.dart';
 
 class Screen2 extends StatelessWidget {
   const Screen2({super.key});
@@ -53,6 +55,7 @@ class _App2State extends State<App2> {
           );
         }
       }),
+      floatingActionButton: FloatingActionButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>App3()))),
     );
   }
 }
