@@ -10,6 +10,7 @@ import android.database.Cursor
 import android.location.Location
 import android.location.LocationManager
 import android.net.wifi.WifiManager
+import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
@@ -22,6 +23,8 @@ import androidx.core.content.PermissionChecker
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.io.BufferedReader
+import java.io.FileReader
 
 class MainActivity: FlutterActivity(){
 
@@ -60,6 +63,10 @@ class MainActivity: FlutterActivity(){
                 "location"->{
                     val location = getLocation()
                     result.success(location)
+                }
+                "getinfo"->{
+                    val map1 = getPhoneInfo()
+                    result.success(map1)
                 }
             }
         }
@@ -224,4 +231,29 @@ class MainActivity: FlutterActivity(){
         return map1
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun getPhoneInfo():Map<Any,Any>{
+        var map1 : MutableMap<Any,Any> = mutableMapOf()
+        map1.put("Build API",Build.VERSION.SDK_INT)
+        map1.put("Board",Build.BOARD)
+        map1.put("Device",Build.DEVICE)
+        map1.put("Hardware",Build.HARDWARE)
+        map1.put("Brand",Build.BRAND)
+        map1.put("Model",Build.SOC_MODEL)
+        map1.put("Manufacturer",Build.MANUFACTURER)
+        map1.put("SOC Manufacturer",Build.SOC_MANUFACTURER)
+        map1.put("User",Build.HOST)
+        map1.put("Battery",batteryLevel())
+        return map1
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun batteryLevel(): List<Any> {
+        val batteryManager = getSystemService(BATTERY_SERVICE) as BatteryManager
+        val batteryLevel = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+        val list1: MutableList<Any> = mutableListOf()
+        list1.add(batteryLevel)
+        list1.add(batteryManager.isCharging)
+        return list1
+    }
 }

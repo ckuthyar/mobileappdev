@@ -1,41 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sangamone3/screen5.dart';
 
-class Screen4 extends StatelessWidget {
-  const Screen4({super.key});
+class Screen5 extends StatelessWidget {
+  const Screen5({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: App4(),
+      home: App5(),
     );
   }
 }
 
-class App4 extends StatefulWidget {
-  const App4({super.key});
+
+class App5 extends StatefulWidget {
+  const App5({super.key});
 
   @override
-  State<App4> createState() => _App4State();
+  State<App5> createState() => _App5State();
 }
 
-class _App4State extends State<App4> {
-  
+class _App5State extends State<App5> {
+
   final channel = MethodChannel("com.example.sangamone3/sms");
   
-  getLocation()async{
-    var data = await channel.invokeMethod("location");
+  getInfo()async{
+    var data = await channel.invokeMethod("getinfo");
     return data;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder(future: getLocation(), builder: (context,snapshot){
+        child: FutureBuilder(future: getInfo(), builder: (context,snapshot){
           if(snapshot.connectionState==ConnectionState.waiting){
-            return Center(child: CircularProgressIndicator(),);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
           else if(snapshot.hasError){
             return Center(
@@ -49,12 +51,11 @@ class _App4State extends State<App4> {
           }
           else{
             return Center(
-              child: Text("no data found"),
+              child: Text("No data found"),
             );
           }
         }),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>App5()))),
     );
   }
 }
