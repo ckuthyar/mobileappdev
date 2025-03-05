@@ -15,8 +15,10 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
 import android.telephony.SmsManager
+import android.telephony.TelephonyManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
@@ -34,12 +36,14 @@ class MainActivity: FlutterActivity(){
     private val BLUTTOOTH_PERMISSION = 102
     private val WIFI_PERMISSION = 103
     private val LOCTION_PERMISSION = 104
+    private val READ_PHONE_STATE = 105
 
+    @SuppressLint("MissingPermission")
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        MethodChannel(flutterEngine.dartExecutor,channel).setMethodCallHandler { call, result ->
+        MethodChannel(flutterEngine.dartExecutor,channel).setMethodCallHandler{ call, result ->
             when(call.method){
                 "smsSend"->{
                     val number = call.argument<String>("Phonenumber")
@@ -68,6 +72,10 @@ class MainActivity: FlutterActivity(){
                     val map1 = getPhoneInfo()
                     result.success(map1)
                 }
+                "simstate"->{
+                    val map2 = getSimDetails()
+                    result.success(map2)
+                }
             }
         }
     }
@@ -95,6 +103,7 @@ class MainActivity: FlutterActivity(){
         requestBluetooth()
         requestWifi()
         requestLocation()
+        requestSimState()
     }
 
 
@@ -180,6 +189,15 @@ class MainActivity: FlutterActivity(){
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),LOCTION_PERMISSION)
         }
     }
+    
+    private fun requestSimState(){
+        if(ContextCompat.checkSelfPermission(context,Manifest.permission.READ_PHONE_STATE)!=PermissionChecker.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_PHONE_NUMBERS),READ_PHONE_STATE)
+        }
+        else{
+            Toast.makeText(context,"Permission Granted",Toast.LENGTH_SHORT).show()
+        }
+    }
 
 
 
@@ -256,4 +274,26 @@ class MainActivity: FlutterActivity(){
         list1.add(batteryManager.isCharging)
         return list1
     }
+
+    @SuppressLint("NewApi")
+    @RequiresPermission(allOf = [Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_PHONE_STATE])
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getSimDetails(): Map<Any,Any> {
+        val telephonyManager = getSystemService(TelephonyManager::class.java)
+        val simDet = telephonyManager.simOperator
+        val simnumber = telephonyManager.line1Number
+        val operator1 = telephonyManager.networkOperator
+        val country = telephonyManager.simCountryIso
+        val countryNetwork = telephonyManager.networkCountryIso
+        val signalStrength = telephonyManager.signalStrength!!.level
+        val map1 = mutableMapOf<Any,Any>()
+        map1.put("simOperator",simDet)
+        map1.put("networkOperator",operator1)
+        map1.put("number",simnumber)
+        map1.put("countrySim",country)
+        map1.put("networkcountry",countryNetwork)
+        map1.put("level",signalStrength)
+        return map1
+    }
+
 }

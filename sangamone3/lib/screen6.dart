@@ -1,41 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sangamone3/screen6.dart';
 
-class Screen5 extends StatelessWidget {
-  const Screen5({super.key});
+class Screen6 extends StatelessWidget {
+  const Screen6({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: App5(),
+      home: App6(),
     );
   }
 }
 
-
-class App5 extends StatefulWidget {
-  const App5({super.key});
+class App6 extends StatefulWidget {
+  const App6({super.key});
 
   @override
-  State<App5> createState() => _App5State();
+  State<App6> createState() => _App6State();
 }
 
-class _App5State extends State<App5> {
-
-  final channel = MethodChannel("com.example.sangamone3/sms");
+class _App6State extends State<App6> {
   
-  getInfo()async{
-    var data = await channel.invokeMethod("getinfo");
+  final channel = MethodChannel("com.example.sangamone3/sms");
+
+  getSimState()async{
+    var data = await channel.invokeMethod("simstate");
+
     return data;
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder(future: getInfo(), builder: (context,snapshot){
-          if(snapshot.connectionState==ConnectionState.waiting){
+        child: FutureBuilder(future: getSimState(), builder: (context,snapshot){
+          if (snapshot.connectionState==ConnectionState.waiting){
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -57,7 +56,6 @@ class _App5State extends State<App5> {
           }
         }),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>App6()))),
     );
   }
 }
