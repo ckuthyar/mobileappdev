@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
-import android.content.Context
 import android.database.Cursor
 import android.location.Location
 import android.location.LocationManager
@@ -25,8 +24,14 @@ import androidx.core.content.PermissionChecker
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.FileReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainActivity: FlutterActivity(){
 
@@ -75,6 +80,14 @@ class MainActivity: FlutterActivity(){
                 "simstate"->{
                     val map2 = getSimDetails()
                     result.success(map2)
+                }
+                "post"->{
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val string2 = getPost()
+                        withContext(Dispatchers.Main){
+                            result.success(string2)
+                        }
+                    }
                 }
             }
         }
@@ -296,4 +309,12 @@ class MainActivity: FlutterActivity(){
         return map1
     }
 
+    private fun getPost(): String? {
+        val url = URL("https://jsonplaceholder.typicode.com/posts").openConnection() as HttpURLConnection
+        url.requestMethod="GET"
+        val data = url.inputStream.bufferedReader().use {
+            it.readText()
+        }
+        return data
+    }
 }
