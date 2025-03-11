@@ -28,8 +28,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.FileReader
+import java.io.OutputStream
+import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -81,11 +84,19 @@ class MainActivity: FlutterActivity(){
                     val map2 = getSimDetails()
                     result.success(map2)
                 }
-                "post"->{
+                "getMethod"->{
                     CoroutineScope(Dispatchers.IO).launch {
-                        val string2 = getPost()
+                        val data = getDataMethod()
                         withContext(Dispatchers.Main){
-                            result.success(string2)
+                            result.success(data)
+                        }
+                    }
+                }
+                "postMethod"->{
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val data = postDataMethod()
+                        withContext(Dispatchers.Main){
+                            result.success(data)
                         }
                     }
                 }
@@ -309,7 +320,7 @@ class MainActivity: FlutterActivity(){
         return map1
     }
 
-    private fun getPost(): String? {
+    private fun getDataMethod():String{
         val url = URL("https://jsonplaceholder.typicode.com/posts").openConnection() as HttpURLConnection
         url.requestMethod="GET"
         val data = url.inputStream.bufferedReader().use {
@@ -317,4 +328,30 @@ class MainActivity: FlutterActivity(){
         }
         return data
     }
+
+    private fun postDataMethod():String{
+        val url = URL("https://jsonplaceholder.typicode.com/posts").openConnection() as HttpURLConnection
+        url.requestMethod="POST"
+        url.setRequestProperty("content-type","application/json")
+        url.doOutput=true
+
+        val map1 = mapOf(
+            "userId" to "1",
+            "title" to "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+            "body" to "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        )
+        val jsonObject = JSONObject(map1)
+        val string1 = jsonObject.toString()
+
+        val outputStream = OutputStreamWriter(url.outputStream)
+        outputStream.write(string1)
+        outputStream.flush()
+
+        val data = url.inputStream.bufferedReader().use {
+            it.readText()
+        }
+
+        return data
+    }
+
 }

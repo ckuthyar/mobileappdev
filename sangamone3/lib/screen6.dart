@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sangamone3/screen7.dart';
 
 class Screen6 extends StatelessWidget {
   const Screen6({super.key});
@@ -24,8 +27,7 @@ class _App6State extends State<App6> {
   final channel = MethodChannel("com.example.sangamone3/sms");
 
   getSimState()async{
-    var data = await channel.invokeMethod("simstate");
-
+    String data = await channel.invokeMethod("simstate");
     return data;
   }
   
@@ -45,8 +47,9 @@ class _App6State extends State<App6> {
             );
           }
           else if(snapshot.hasData){
+            var data = snapshot.data;
             return Center(
-              child: Text("${snapshot.data}"),
+              child: Text("${data}"),
             );
           }
           else{
@@ -56,6 +59,7 @@ class _App6State extends State<App6> {
           }
         }),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>App7()))),
     );
   }
 }
